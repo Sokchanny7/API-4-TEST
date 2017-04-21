@@ -4,10 +4,11 @@ import java.util.ArrayList;
 
 import org.springframework.stereotype.Service;
 
-import com.api.entities.CreateProduct;
-import com.api.model.Product;
+import com.api.entities.creates.CreateProduct;
+import com.api.entities.gets.GetProduct;
 
 public interface ProductService {
-	public ArrayList<Product> findProducts();
+	public ArrayList<GetProduct> findProducts();
 	public boolean createProduct(CreateProduct product);
+	public boolean deleteProduct(String id);
 }

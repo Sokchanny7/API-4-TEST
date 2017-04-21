@@ -22,10 +22,10 @@ import com.mangofactory.swagger.plugin.EnableSwagger;
 @EnableSwagger
 public class WebConfiguration {
 
-	@Autowired
-	private Environment environment;
+	@Autowired private Environment environment;
+	@Autowired private ResourceLoader resourceLoader;
 
-	@Bean
+	@Bean	
 	public DataSource getDataSource(){
 		DriverManagerDataSource dataSource=new DriverManagerDataSource();
 		dataSource.setDriverClassName(environment.getProperty("MOL.dataSource.driverClassName"));
@@ -44,7 +44,11 @@ public class WebConfiguration {
 	public SqlSessionFactoryBean sqlSessionFactory() throws Exception {
 		SqlSessionFactoryBean sessionFactory = new SqlSessionFactoryBean();
 		sessionFactory.setDataSource(getDataSource());
+		sessionFactory.setMapperLocations(ResourcePatternUtils.
+				getResourcePatternResolver(resourceLoader).
+	            getResources("classpath:com/api/mybatis/*.xml"));
 		return sessionFactory;
 	}
+	
 
 }

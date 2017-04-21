@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"    
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+ <mapper namespace="com.api.repositories.UserRepository">
+ 	
+ 	<resultMap id="ResultUsers" type="com.api.entities.gets.GetUser">        
+ 		<result property="u_id" column="u_id"/>  
+ 		<result property="u_name" column="u_name"/>  
+ 		<result property="u_image" column="u_image"/>  
+ 		<result property="u_email" column="u_email"/>  	
+   </resultMap>
+   
+ 	<select
+  		id="getUsers"  		
+  		resultType="list"
+  		resultMap="ResultUsers"
+  		flushCache="false"
+  		useCache="true"
+  		timeout="10000"
+  		fetchSize="256"
+  		statementType="PREPARED"
+  		resultSetType="FORWARD_ONLY">
+  		
+  		SELECT u_id, u_name, u_image, u_email
+  		FROM public.tb_user;
+  		
+  	</select>
+ 	 
+	<insert
+  		id="createUser"
+  		parameterType="com.api.entities.creates.CreateUser"  
+  		flushCache="true"
+  		statementType="PREPARED"  
+  		timeout="20">
+  	 	INSERT INTO public.tb_user(            
+            u_name, 
+            u_image, 
+            u_email, 
+            u_password)
+    		VALUES (
+    		#{u_name}, 
+    		#{u_image}, 
+    		#{u_email},
+    		#{u_password});  
+  	</insert>
+  	  	
+  	<delete id="deleteUser"
+  		parameterType="String"
+  		flushCache="true"
+  		statementType="PREPARED"
+  		timeout="20">  		
+  		DELETE FROM public.tb_user 
+  		WHERE u_id = #{id}  		
+  	</delete>
+  	
+  </mapper>

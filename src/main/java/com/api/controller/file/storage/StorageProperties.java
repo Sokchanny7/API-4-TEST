@@ -1,21 +1,19 @@
 package com.api.controller.file.storage;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
 
 @ConfigurationProperties("storage")
+@PropertySource(value={"classpath:configuration.properties"})
 public class StorageProperties {
-
-    /**
-     * Folder location for storing files
-     */
-    private String location = "upload-dir";
+	
+	@Autowired
+	private Environment environment;   
 
     public String getLocation() {
-        return location;
+        return environment.getProperty("MOL.dataSource.upload-dir");
     }
-
-    public void setLocation(String location) {
-        this.location = location;
-    }
-
+    
 }

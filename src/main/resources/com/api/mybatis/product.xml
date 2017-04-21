@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"    
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ 
+ <mapper namespace="com.api.repositories.ProductRepository">
+ 	
+ 	<resultMap id="ResultProducts" type="com.api.entities.gets.GetProduct">        
+ 		<result property="pr_id" column="pr_id"/>  
+ 		<result property="pr_name" column="pr_name"/>  
+ 		<result property="pr_image" column="pr_image"/>  
+ 		  
+   </resultMap>
+   
+ 	<select
+  		id="findProducts"  		
+  		resultType="list"
+  		resultMap="ResultProducts"
+  		flushCache="false"
+  		useCache="true"
+  		timeout="10000"
+  		fetchSize="256"
+  		statementType="PREPARED"
+  		resultSetType="FORWARD_ONLY">
+  		
+  		SELECT pr_id, pr_name, pr_image
+  		FROM public.tb_product;
+  		
+  	</select>
+ 	 
+	<insert
+  		id="createProduct"
+  		parameterType="com.api.entities.creates.CreateProduct"  
+  		flushCache="true"
+  		statementType="PREPARED"  
+  		timeout="20">
+  	 	INSERT INTO tb_product (pr_name, pr_image) VALUES (#{pr_name}, #{pr_image})  
+  	</insert>
+  	  	
+  	<delete id="deleteProduct"
+  		parameterType="String"
+  		flushCache="true"
+  		statementType="PREPARED"
+  		timeout="20">  		
+  		DELETE FROM tb_product 
+  		WHERE pr_id = #{id}  		
+  	</delete>
+  	
+  </mapper>

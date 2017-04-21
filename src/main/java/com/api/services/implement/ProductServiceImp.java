@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.api.entities.CreateProduct;
-import com.api.model.Product;
+import com.api.entities.creates.CreateProduct;
+import com.api.entities.gets.GetProduct;
 import com.api.repositories.ProductRepository;
 import com.api.services.ProductService;
 
@@ -17,13 +17,18 @@ public class ProductServiceImp implements ProductService {
 	private ProductRepository productRepository;
 	
 	@Override
-	public ArrayList<Product> findProducts() {
+	public ArrayList<GetProduct> findProducts() {
 		return productRepository.findProducts();
 	}
 
 	@Override
 	public boolean createProduct(CreateProduct product) {		
 		return productRepository.createProduct(product);
+	}
+
+	@Override
+	public boolean deleteProduct(String id) {		
+		return productRepository.deleteProduct(id);
 	}
 
 }
